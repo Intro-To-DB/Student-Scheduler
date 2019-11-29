@@ -13,14 +13,7 @@
 </head>
 <body>
 	<?php
-	//FOR DEBUG
-	echo("Username: " . $postUser . "<br>");
-	echo("Password: " . $postPass);
-	?>
-	<?php
 	//confirm username & password combo exists in DB
-	//$result = mysqli_query($SDB, "SELECT count(*) as total FROM users WHERE username='$postUser'");
-	//$data = mysqli_fetch_assoc($result);
 	$query = mysqli_query($SDB, "SELECT count(*) as total FROM users WHERE username='$postUser' AND password='$postPass'");
 	$data = mysqli_fetch_assoc($query);
 	if($data){

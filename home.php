@@ -1,6 +1,7 @@
 <!-- display courses -->
 <?php
 	session_start();
+	require('dbconnect.php');
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -8,14 +9,26 @@
 	<?php echo("<title>" . $_SESSION["username"] . "'s Homepage</title>"); ?>
 </head>
 <body>
-	<?php echo("<p>Welcome to your homepage, " . $_SESSION["username"] . ".</p>"); ?>
-	<table>
-		<th><b>Courses</b></th>
-		<tr><td><button>Fake Course 1</button></td></tr>
-		<tr><td><button>Fake Course 2</button></td></tr>
-		<tr><td><button>Fake Course 3</button></td></tr>
-		<tr><td><button>Fake Course 4</button></td></tr>
-		<tr><td><button>Fake Course 5</button></td></tr>
-	</table>
+	<?php
+		echo($_SESSION['username'] . "<br>" . $_SESSION['userType'] . "<br><br>");
+		$idArr = array();
+		$query = mysqli_query($SDB, "SELECT enID, crsID FROM enrolled WHERE userID='" . $_SESSION['userID'] . "'");
+		while($data = mysqli_fetch_assoc($query)){
+			$idArr[$data['enID']] = $data['crsID'];
+		}
+		$crs_query = mysqli_query($SDB, "SELECT crsName FROM course WHERE crsID IN (" . implode(', ', $idArr) . ")");
+		echo("Enrolled courses for " . $_SESSION['username'] . ": <br>");
+		$crsArr = array();
+		while($crs_data = mysqli_fetch_assoc($crs_query)){
+			$crsArr[] = $crs_data['crsName'];
+		}
+		echo(implode("<br>", $crsArr));
+	?>
+	<div id="home_footer">
+		<br>
+		<form id="logout_button" action="logout.php">
+			<input type="submit" name="logout" value="Logout"/>
+		</form>
+	</div>
 </body>
 </html>
