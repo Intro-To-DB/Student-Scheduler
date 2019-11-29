@@ -1,6 +1,8 @@
 <!-- authenticate login information and set session variables -->
 <?php
 	session_start();
+	require("dbconnect.php");
+
 	$postUser = $_POST['username'];
 	$postPass = $_POST['password'];
 ?>
