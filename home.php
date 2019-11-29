@@ -22,8 +22,17 @@
 		while($crs_data = mysqli_fetch_assoc($crs_query)){
 			$crsArr[] = $crs_data['crsName'];
 		}
-		echo(implode("<br>", $crsArr));
-	?>
+		?>
+	<div id="course_table">
+		<?php
+			foreach($crsArr as $item){
+				echo("<form id='" . $item . "' method='post' action='assignments.php'>");
+				//echo("<input type='hidden' name='crsName' value='" . $item . "'>");
+				echo("<input type='submit' name='crsName' value='" . $item . "'>");
+				echo("</form>");
+			}
+		?>
+	</div>
 	<div id="home_footer">
 		<br>
 		<form id="logout_button" action="logout.php">
