@@ -19,12 +19,28 @@
 	?>
 	<?php
 	//confirm username & password combo exists in DB
-	// V SPOOFED V
-	if($postUser == "Gary" && $postPass == "garyPass"){
-		$_SESSION["username"] = $postUser;
-		header("Location: ./home.php");
+	//$result = mysqli_query($SDB, "SELECT count(*) as total FROM users WHERE username='$postUser'");
+	//$data = mysqli_fetch_assoc($result);
+	$query = mysqli_query($SDB, "SELECT count(*) as total FROM users WHERE username='$postUser' AND password='$postPass'");
+	$data = mysqli_fetch_assoc($query);
+	if($data){
+		//Success
+		if($data['total'] == 1){
+			$_SESSION['username'] = $postUser;
+			$query = mysqli_query($SDB, "SELECT userID, instrFlag FROM users WHERE username='$postUser'");
+			$data = mysqli_fetch_assoc($query);
+			$_SESSION['userID'] = $data['userID'];
+			if($data['instrFlag'] == 0){
+				$_SESSION['userType'] = "student";
+			} else {
+				$_SESSION['userType'] = "instructor";
+			}
+			header("Location: ./home.php");
+		} else {
+			header("Location: ./login.php");
+		}
 	} else {
-		header("Location: ./login.php");
+		echo("Error: " . mysqli_error($SDB));
 	}
 	?>
 </body>
