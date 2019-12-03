@@ -2,6 +2,12 @@
 <?php
 	session_start();
 	//include("favicon.php");
+
+	// Check if the user is logged in, if so then redirect to home page
+	if(isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] == true){
+    		header("location: home.php");
+    		exit;
+	}
 ?>
 <!DOCTYPE html>
 <html>
