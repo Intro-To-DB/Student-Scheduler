@@ -22,6 +22,10 @@
 			$_SESSION['username'] = $postUser;
 			$query = mysqli_query($SDB, "SELECT userID, instrFlag FROM users WHERE username='$postUser'");
 			$data = mysqli_fetch_assoc($query);
+			
+			//mark user as logged in
+			$_SESSION['loggedin'] = true;
+			
 			$_SESSION['userID'] = $data['userID'];
 			if($data['instrFlag'] == 0){
 				$_SESSION['userType'] = "student";
