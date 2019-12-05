@@ -38,6 +38,7 @@
 			echo "<br>WORKS<br>";
 			$sql = "INSERT INTO assignment (dueDate, descr, completed, crsID) VALUES ('" . $dueDate . "', '" . $descr  ."', 0,'" . $_SESSION['chosenCourseID'] . "')";
 			$query = mysqli_query($DBAccess, $sql);
+			//echo $sql;
 		}
 		
 		function removeAssign($descr, $DBAccess) {
